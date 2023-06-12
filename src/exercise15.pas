@@ -15,24 +15,11 @@ g,k,j,MyFile:integer;
 
 begin
 
-  Assign(f,'/home/sergey.ivanov/start-to-pascal/config/1-4.hex');
-  {$I-}
-  reset(f);
-  {$I+}
-  if IOResult<>0 then
-  writeln ('File not found')
-  else
-  begin
-  MyFile:=FileSize(f);
-  WriteLn('File size ', MyFile, ',byte');
-  end;
-
-Setlength(a,MyFile);
-Setlength(b,MyFile);
-
 Assign(f,'/home/sergey.ivanov/start-to-pascal/config/1-4.hex');
 Reset(f);
-k:=0;
+MyFile:=FileSize(f);
+Setlength(a,MyFile);
+Setlength(b,MyFile);
 
 begin
   For g:=0 to MyFile-1 do
@@ -47,6 +34,19 @@ end;
 
 end.
 
+
+
+ // Assign(f,'/home/sergey.ivanov/start-to-pascal/config/1-4.hex');
+  // {$I-}
+  // reset(f);
+  // {$I+}
+  // if IOResult<>0 then
+  // writeln ('File not found')
+  // else
+  // begin
+  // MyFile:=FileSize(f);
+  // WriteLn('File size ', MyFile, ',byte');
+  // end;
 
 
 // program test_R_W_array;  
