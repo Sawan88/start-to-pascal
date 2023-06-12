@@ -11,24 +11,37 @@ a: TByteArray;
 b: TByteArray;
 f:file of byte;
 n,i:byte;
-g,k,j:integer;
+g,k,j,MyFile:integer;
 
 begin
-Setlength(a,374);
-Setlength(b,374);
+
+  Assign(f,'/home/sergey.ivanov/start-to-pascal/config/1-4.hex');
+  {$I-}
+  reset(f);
+  {$I+}
+  if IOResult<>0 then
+  writeln ('File not found')
+  else
+  begin
+  MyFile:=FileSize(f);
+  WriteLn('File size ', MyFile, ',byte');
+  end;
+
+Setlength(a,MyFile);
+Setlength(b,MyFile);
 
 Assign(f,'/home/sergey.ivanov/start-to-pascal/config/1-4.hex');
-Reset(f,1);
+Reset(f);
 k:=0;
 
 begin
-  For g:=0 to 373 do
+  For g:=0 to MyFile-1 do
   begin
      read(f,a[g]);
      n:=a[g];
      b[n]:=b[n]+1;
     end;
-  For j:=0 to 373 do
+  For j:=0 to 255 do
     Writeln('0x',j.tohexstring(2),' - ',b[j]);
 end;
 
