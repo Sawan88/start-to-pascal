@@ -2,75 +2,30 @@ Program readfile;
 {$mode objfpc}
 uses sysutils;
 
-Type
-  TByteArray = Array of Byte;
-
 var
-
-a: TByteArray;
-b: TByteArray;
+b: array [0..255] of int64;
 f:file of byte;
 n,i:byte;
-g,k,j,MyFile:integer;
+g,j:integer;
 
 begin
-
 Assign(f,'/home/sergey.ivanov/start-to-pascal/config/1-4.hex');
 Reset(f);
-MyFile:=FileSize(f);
-Setlength(a,MyFile);
-Setlength(b,MyFile);
-
-begin
-  For g:=0 to MyFile-1 do
-  begin
-     read(f,a[g]);
-     n:=a[g];
-     b[n]:=b[n]+1;
+g:=0;
+while g<=255 do begin
+    read(f,i);
+    b[i]:=b[i]+1;
+    if not EOF(f) then
+    g:=g+1
+    else
+    begin
+    //Close(f);
+    break;
     end;
-  For j:=0 to 255 do
-    Writeln('0x',j.tohexstring(2),' - ',b[j]);
-end;
+    if g>=255 then
+    g:=0
+    end;
+For j:=0 to 255 do
+     Writeln('0x',LowerCase(IntToHex(j,2)),' - ',b[j]);
 
 end.
-
-
-
- // Assign(f,'/home/sergey.ivanov/start-to-pascal/config/1-4.hex');
-  // {$I-}
-  // reset(f);
-  // {$I+}
-  // if IOResult<>0 then
-  // writeln ('File not found')
-  // else
-  // begin
-  // MyFile:=FileSize(f);
-  // WriteLn('File size ', MyFile, ',byte');
-  // end;
-
-
-// program test_R_W_array;  
- 
-// Type  
-//   TA = array of Integer;  
- 
-// var  
-//   A : TA;  
-//   B : array [0..9] of integer; 
-//   I : Integer;
-//   Z : integer;  
-//   r_A: integer;
-
-
-// begin
-// A:=TA.Create(1,2,3,2,4,3,1,2,3,1);  
-//   //Setlength(B,10);  
-//   For I:=0 to 9 do
-//   begin  
-//      r_A:=A[i]; 
-//      B[r_A]:=B[r_A]+1;  
-//     end;
-//   For Z:=0 to 9 do 
-//     Writeln(B[Z]); 
- 
-// end.
